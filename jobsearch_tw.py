@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import tweepy
+import pdb
 
 consumer_key = 'u49TM32o5fGz6BBVBvdX1D5lA'
 consumer_secret = 'ggq8FLJb75ZwzFI8Nk5Nr2PIp8t5rFm5svoyvbSn2nESv8E8wc'
@@ -12,9 +13,29 @@ auth.set_access_token(access_token, access_token_secret)
 twitter_api = tweepy.API(auth)
 
 results = twitter_api.search(
-    q="content manager"
+    q="content manager London",
+    lang="en"
 )
 
-for result in results:
-    assert isinstance(result.text, object)
-    print result.text
+with open("hello.txt", "wb") as f:
+	for tweet in results:
+	#print tweet.user.name + ":" + tweet.text
+		line = tweet.user.name + ":" + tweet.text
+		f.write(line.encode("UTF-8") + "\r\n")
+
+results = twitter_api.search(
+    q="content manager London",
+    lang="en",
+	since_id = tweet.id)
+
+for tweet in results:
+	line = tweet.user.name + ":" + tweet.text
+	print line.encode("UTF-8")
+
+#print len(results) 
+#pdb.set_trace()
+
+
+
+	#assert isinstance(SearchResults, object)
+	#print result
